@@ -153,8 +153,8 @@ RULES:
         systemInstruction: { parts: [{ text: systemPrompt }] }
       };
 
-      // Stable model (gemini-1.5-flash works with standard API keys; preview models can require allowlist)
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+      // Use gemini-2.0-flash (current model; gemini-1.5-flash IDs were deprecated and return 404)
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
       const res = await fetch(url, {
         method: 'POST',

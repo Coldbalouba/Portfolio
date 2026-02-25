@@ -58,6 +58,10 @@ The site works without a key; the "Interview My AI Clone" chat will show a frien
 - Locally: create a `.env` file with `VITE_GEMINI_API_KEY=your_key` (see `.env.example`).
 - Vercel: set `VITE_GEMINI_API_KEY` in the project’s Environment Variables.
 
+## Duplicate projects on Vercel?
+
+If you imported from GitHub and also deployed via CLI, you may see two projects (e.g. "Portfolio" and "aj-portfolio"). **Keep one** and delete the other: [vercel.com/dashboard](https://vercel.com/dashboard) → click the duplicate project → **Settings** → scroll to **Delete Project**. Point your domain to the project you kept.
+
 ## Scripts
 
 | Command       | Description                |
