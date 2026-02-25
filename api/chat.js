@@ -33,8 +33,15 @@ export async function POST(request) {
       },
     };
 
-    // Try stable models in order (AI Studio keys work with these)
-    const modelsToTry = ["gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"];
+    // Use FREE-TIER models first. gemini-2.0-flash has limit 0 on free tier and will always quota-error.
+    const modelsToTry = [
+      "gemini-2.5-flash",
+      "gemini-2.5-flash-preview-09-2025",
+      "gemini-1.5-flash",
+      "gemini-1.5-flash-002",
+      "gemini-1.5-pro",
+      "gemini-1.5-pro-002",
+    ];
     let lastError = null;
     let lastStatus = 404;
 
@@ -53,7 +60,9 @@ export async function POST(request) {
 
       lastStatus = res.status;
       lastError = data?.error?.message || res.statusText;
-      if (res.status !== 404) break;
+      // On auth error, no point trying other models
+      if (res.status === 401 || res.status === 403) break;
+      // On 429 (quota) or 404 (model not found), try next model—free-tier models vary by account
     }
 
     return Response.json(
