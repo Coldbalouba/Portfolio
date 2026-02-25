@@ -6,8 +6,7 @@ import {
   Send, Bot, User, Loader2, Monitor, ImageIcon, ChevronLeft
 } from 'lucide-react';
 
-// API key from env (set VITE_GEMINI_API_KEY in Vercel dashboard / .env)
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY || "";
+// Chat uses server-side /api/chat (set GEMINI_API_KEY in Vercel). No key in client.
 
 export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -41,10 +40,16 @@ export default function App() {
   const nextImage = () => setCurrentImageIndex((prev) => (prev + 1) % currentGallery.length);
   const prevImage = () => setCurrentImageIndex((prev) => (prev - 1 + currentGallery.length) % currentGallery.length);
 
-  // Google Drive blocks old /uc?export=view links when embedded. Thumbnail URL works if file is shared "anyone with link".
-  const toDriveThumbnail = (url) => {
-    const match = typeof url === 'string' && url.includes('drive.google.com') && url.match(/[?&]id=([^&]+)/);
-    return match ? `https://drive.google.com/thumbnail?id=${match[1]}&sz=w1200` : url;
+  // High-quality Drive image: large thumbnail (w1920). "Open full size" opens Drive for GIFs/full res.
+  const toDriveImageUrl = (url, large = true) => {
+    const match = typeof url === "string" && url.includes("drive.google.com") && url.match(/[?&]id=([^&]+)/);
+    if (!match) return url;
+    const id = match[1];
+    return large ? `https://drive.google.com/thumbnail?id=${id}&sz=w1920` : `https://drive.google.com/uc?export=view&id=${id}`;
+  };
+  const getDriveViewUrl = (url) => {
+    const match = typeof url === "string" && url.includes("drive.google.com") && url.match(/[?&]id=([^&]+)/);
+    return match ? `https://drive.google.com/file/d/${match[1]}/view` : url;
   };
 
   // Auto-scroll chat
@@ -118,28 +123,9 @@ RULES:
 - If asked something outside your knowledge base, say: "That's a great question! I'd love to discuss that further in an interview. Feel free to email me at Coldbalouba@gmail.com."
 - Highlight the intersection of your Business knowledge, Tech skills, and AI expertise.`;
 
-  const fetchWithRetry = async (url, options, retries = 5) => {
-    const delays = [1000, 2000, 4000, 8000, 16000];
-    for (let i = 0; i < retries; i++) {
-      try {
-        const res = await fetch(url, options);
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        return await res.json();
-      } catch (error) {
-        if (i === retries - 1) throw error;
-        await new Promise(resolve => setTimeout(resolve, delays[i]));
-      }
-    }
-  };
-
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!inputText.trim() || isLoading) return;
-
-    if (!apiKey || apiKey.trim() === "") {
-      setMessages(prev => [...prev, { role: "ai", text: "The chat isn't configured yet (missing API key). Please add VITE_GEMINI_API_KEY in Vercel → Project → Settings → Environment Variables, then redeploy. Until then, reach out at Coldbalouba@gmail.com!" }]);
-      return;
-    }
 
     const userMsg = { role: "user", text: inputText };
     setMessages(prev => [...prev, userMsg]);
@@ -147,41 +133,26 @@ RULES:
     setIsLoading(true);
 
     try {
-      // Format history for Gemini
-      const chatHistory = messages.map(m => ({
-        role: m.role === 'ai' ? 'model' : 'user',
-        parts: [{ text: m.text }]
-      }));
-      chatHistory.push({ role: 'user', parts: [{ text: userMsg.text }] });
-
-      const payload = {
-        contents: chatHistory,
-        systemInstruction: { parts: [{ text: systemPrompt }] }
-      };
-
-      // Use gemini-2.0-flash (current model; gemini-1.5-flash IDs were deprecated and return 404)
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+      const chatHistory = [...messages, userMsg];
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: chatHistory, systemPrompt }),
       });
-
       const data = await res.json();
 
       if (!res.ok) {
-        const errMsg = data?.error?.message || data?.error?.code || res.statusText;
-        console.error("Gemini API error:", res.status, data);
-        setMessages(prev => [...prev, { role: "ai", text: `The AI service returned an error (${res.status}). If you added the API key recently, redeploy the site so the new key is used. Otherwise check your key at Google AI Studio. You can always email me at Coldbalouba@gmail.com!` }]);
+        const errMsg = data?.error || `Error ${res.status}`;
+        console.error("Chat API error:", res.status, data);
+        setMessages(prev => [...prev, { role: "ai", text: `Something went wrong: ${errMsg}. Make sure GEMINI_API_KEY is set in Vercel → Settings → Environment Variables and redeploy. You can always email me at Coldbalouba@gmail.com!` }]);
         return;
       }
 
-      const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "I didn't get a reply from the model. Try again or email me at Coldbalouba@gmail.com!";
+      const aiText = data?.text || "I didn't get a reply. Try again or email me at Coldbalouba@gmail.com!";
       setMessages(prev => [...prev, { role: "ai", text: aiText }]);
     } catch (error) {
       console.error("Chat error:", error);
-      setMessages(prev => [...prev, { role: "ai", text: "Network or server error. If you just set the API key, redeploy the project on Vercel (env vars are applied at build time). Otherwise reach out at Coldbalouba@gmail.com!" }]);
+      setMessages(prev => [...prev, { role: "ai", text: "Network error. If you're testing locally, run `vercel dev` so the chat API works. Otherwise reach out at Coldbalouba@gmail.com!" }]);
     } finally {
       setIsLoading(false);
     }
@@ -708,13 +679,31 @@ RULES:
               </button>
             </div>
 
-            <div className="relative w-full aspect-video bg-slate-900 border border-slate-700 rounded-xl overflow-hidden flex items-center justify-center shadow-2xl">
+            <div className="relative w-full min-h-[400px] aspect-video bg-slate-900 border border-slate-700 rounded-xl overflow-hidden flex items-center justify-center shadow-2xl">
               <img 
-                src={toDriveThumbnail(currentGallery[currentImageIndex])} 
+                src={toDriveImageUrl(currentGallery[currentImageIndex], true)} 
                 alt={`${currentGalleryTitle} Screenshot ${currentImageIndex + 1}`} 
                 className="w-full h-full object-contain"
-                onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/800x450/1e293b/64748b?text=Image+not+available"; }}
+                loading="eager"
+                onError={(e) => {
+                  const next = toDriveImageUrl(currentGallery[currentImageIndex], false);
+                  if (e.target.src !== next) {
+                    e.target.onerror = null;
+                    e.target.src = next;
+                  } else {
+                    e.target.onerror = null;
+                    e.target.src = "https://placehold.co/1200x675/1e293b/64748b?text=Image+unavailable";
+                  }
+                }}
               />
+              <a
+                href={getDriveViewUrl(currentGallery[currentImageIndex])}
+                target="_blank"
+                rel="noreferrer"
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-lg bg-slate-950/90 text-white text-sm font-medium hover:bg-emerald-500 hover:text-slate-950 transition-colors border border-slate-600"
+              >
+                Open full size (best for GIFs)
+              </a>
               
               {currentGallery.length > 1 && (
                 <>
