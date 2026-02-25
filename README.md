@@ -56,7 +56,11 @@ The site works without a key; the "Interview My AI Clone" chat will show a frien
 
 - Get a key: [Google AI Studio](https://aistudio.google.com/app/apikey)
 - Locally: create a `.env` file with `VITE_GEMINI_API_KEY=your_key` (see `.env.example`).
-- Vercel: set `VITE_GEMINI_API_KEY` in the project’s Environment Variables.
+- **Vercel:** add `VITE_GEMINI_API_KEY` in the project’s Environment Variables. **Redeploy after adding it** (Deployments → ⋮ → Redeploy)—env vars are baked in at build time.
+
+## Project Media (Google Drive) images
+
+Gallery images use Google Drive. For them to load, each file must be shared **"Anyone with the link"**. The app uses Drive thumbnail URL format; if an image still does not show, check the share setting.
 
 ## Duplicate projects on Vercel?
 

@@ -41,6 +41,12 @@ export default function App() {
   const nextImage = () => setCurrentImageIndex((prev) => (prev + 1) % currentGallery.length);
   const prevImage = () => setCurrentImageIndex((prev) => (prev - 1 + currentGallery.length) % currentGallery.length);
 
+  // Google Drive blocks old /uc?export=view links when embedded. Thumbnail URL works if file is shared "anyone with link".
+  const toDriveThumbnail = (url) => {
+    const match = typeof url === 'string' && url.includes('drive.google.com') && url.match(/[?&]id=([^&]+)/);
+    return match ? `https://drive.google.com/thumbnail?id=${match[1]}&sz=w1200` : url;
+  };
+
   // Auto-scroll chat
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -704,9 +710,10 @@ RULES:
 
             <div className="relative w-full aspect-video bg-slate-900 border border-slate-700 rounded-xl overflow-hidden flex items-center justify-center shadow-2xl">
               <img 
-                src={currentGallery[currentImageIndex]} 
+                src={toDriveThumbnail(currentGallery[currentImageIndex])} 
                 alt={`${currentGalleryTitle} Screenshot ${currentImageIndex + 1}`} 
                 className="w-full h-full object-contain"
+                onError={(e) => { e.target.onerror = null; e.target.src = "https://placehold.co/800x450/1e293b/64748b?text=Image+not+available"; }}
               />
               
               {currentGallery.length > 1 && (
