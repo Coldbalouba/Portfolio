@@ -130,6 +130,11 @@ RULES:
     e.preventDefault();
     if (!inputText.trim() || isLoading) return;
 
+    if (!apiKey || apiKey.trim() === "") {
+      setMessages(prev => [...prev, { role: "ai", text: "The chat isn't configured yet (missing API key). Please add VITE_GEMINI_API_KEY in Vercel → Project → Settings → Environment Variables, then redeploy. Until then, reach out at Coldbalouba@gmail.com!" }]);
+      return;
+    }
+
     const userMsg = { role: "user", text: inputText };
     setMessages(prev => [...prev, userMsg]);
     setInputText("");
@@ -148,22 +153,29 @@ RULES:
         systemInstruction: { parts: [{ text: systemPrompt }] }
       };
 
-      // VERCEL DEPLOYMENT NOTE: 
-      // This fetch call uses the 'apiKey' variable defined at the top of the file.
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-      
-      const data = await fetchWithRetry(url, {
+      // Stable model (gemini-1.5-flash works with standard API keys; preview models can require allowlist)
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+
+      const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
 
-      const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I encountered an error connecting to my server. Please email me directly instead!";
-      
+      const data = await res.json();
+
+      if (!res.ok) {
+        const errMsg = data?.error?.message || data?.error?.code || res.statusText;
+        console.error("Gemini API error:", res.status, data);
+        setMessages(prev => [...prev, { role: "ai", text: `The AI service returned an error (${res.status}). If you added the API key recently, redeploy the site so the new key is used. Otherwise check your key at Google AI Studio. You can always email me at Coldbalouba@gmail.com!` }]);
+        return;
+      }
+
+      const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "I didn't get a reply from the model. Try again or email me at Coldbalouba@gmail.com!";
       setMessages(prev => [...prev, { role: "ai", text: aiText }]);
     } catch (error) {
       console.error("Chat error:", error);
-      setMessages(prev => [...prev, { role: "ai", text: "Oops! My AI server is taking a quick break. Feel free to reach out to me via email at Coldbalouba@gmail.com!" }]);
+      setMessages(prev => [...prev, { role: "ai", text: "Network or server error. If you just set the API key, redeploy the project on Vercel (env vars are applied at build time). Otherwise reach out at Coldbalouba@gmail.com!" }]);
     } finally {
       setIsLoading(false);
     }
