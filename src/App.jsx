@@ -166,10 +166,7 @@ RULES:
       tech: ["Next.js", "Python", "LLM APIs", "Data Analytics", "AWS"],
       icon: <LineChart className="w-6 h-6 text-orange-400" />,
       githubLink: "https://github.com/Coldbalouba/BizOps-AI.git",
-      gallery: [
-        "https://drive.google.com/uc?export=view&id=16C7Nhz7m0WJHVqUVcfVvdZNr4jVMT2M1",
-        "https://drive.google.com/uc?export=view&id=1a4DzcZvrY9EK1bVC6AR2RfrqdsCIhoEN"
-      ]
+      gallery: ["/projects/bizops-ai/1.png", "/projects/bizops-ai/2.gif"]
     },
     {
       title: "MyBot - AI Web Automator",
@@ -178,10 +175,7 @@ RULES:
       tech: ["Python", "FastAPI", "Ollama", "AI Vision", "Chromium"],
       icon: <img src="/image_439cb4.jpg" alt="MyBot Logo" className="w-7 h-7 rounded-md object-cover" onError={(e) => { e.target.onerror = null; e.target.src = "https://ui-avatars.com/api/?name=MB&background=0f172a&color=34d399"; }} />,
       githubLink: "https://github.com/Coldbalouba/MyBot.git",
-      gallery: [
-        "https://drive.google.com/uc?export=view&id=1WTltQgdBRm9qi8EC3r4cNEwcWrx_Xyof",
-        "https://drive.google.com/uc?export=view&id=1VTwVnFkeOGsLuZlj0vmCcioLxFN9GLl4"
-      ]
+      gallery: ["/projects/mybot/1.gif", "/projects/mybot/2.png"]
     },
     {
       title: "SchoAi Platform",
@@ -190,10 +184,7 @@ RULES:
       tech: ["React", "Python", "Node.js", "AI Integration", "PostgreSQL"],
       icon: <GraduationCap className="w-6 h-6 text-blue-400" />,
       githubLink: "https://github.com/Coldbalouba/SchoAi",
-      gallery: [
-        "https://drive.google.com/uc?export=view&id=1cUW9yf6A538Yrla7HBwTDsplVEOiIpDN",
-        "https://drive.google.com/uc?export=view&id=1OXsP6fCntOmyLua0S2InZ9d8YQgVRqKo"
-      ]
+      gallery: ["/projects/schoai/1.png", "/projects/schoai/2.gif"]
     },
     {
       title: "DeskUp - Workspace Automator",
@@ -202,10 +193,7 @@ RULES:
       tech: ["Electron", "React", "TypeScript", "Node.js", "System APIs"],
       icon: <Monitor className="w-6 h-6 text-indigo-400" />,
       githubLink: "https://github.com/Coldbalouba/DeskUp.git",
-      gallery: [
-        "https://drive.google.com/uc?export=view&id=1evnxNNaPwcPm150YkqwfV3UAUBKpUFGl",
-        "https://drive.google.com/uc?export=view&id=1wP0LW9DKCasZjckUyDndLJIQY8d04-vA"
-      ]
+      gallery: ["/projects/deskup/1.gif", "/projects/deskup/2.png"]
     },
   ];
 
