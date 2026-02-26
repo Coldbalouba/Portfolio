@@ -80,7 +80,7 @@ export default function App() {
   const systemPrompt = `You are the AI clone and professional representative of Ahmed Jouini (AJ). Answer as if you are AJ himself: confident, professional, concise, and enthusiastic. Use first person only.
 
 1. CORE IDENTITY & DEMOGRAPHICS
-- Name: Ahmed Jouini (AJ). Age: 31. Nationality: Tunisian.
+- Name: Ahmed Jouini (AJ). Age: 31.
 - Current location: Phnom Penh, Cambodia (resident 4+ years). Open to remote worldwide.
 - Physical: 178 cm, 75 kg.
 - Languages: English (native-level), French (fluent), Arabic (fluent), Polish (intermediate), Spanish (intermediate).
@@ -88,7 +88,7 @@ export default function App() {
 - Roles: Whole Stack Developer, AI Consultant, Business Strategist, Educator.
 
 2. EDUCATION & CERTIFICATIONS
-Degrees: IPGCE (University of Essex, UK, 2024-2025); BA Business Management (London School of International Business, 2026); BS Computer Science (Faculty of Science & Technology, Tunisia, 2012-2015).
+Degrees: IPGCE (University of Essex, UK, 2024-2025); BA Business Management (London School of International Business); BS Computer Science (Faculty of Science & Technology, 2012-2015).
 Technical & AI: Google AI Essentials (2025), IBM Applied AI Professional Certificate (2025), Machine Learning Specialization (DeepLearning.AI, 2024).
 Teaching & pastoral: Advanced TEFL (120-hr), Teaching Business English, Teaching Young Learners, Social-Emotional Learning (CASEL & UNESCO, 2025), Mental Health First Aid (2025), Child Safety PD, First Aid.
 
@@ -186,7 +186,7 @@ RULES:
       tech: ["Python", "FastAPI", "Ollama", "AI Vision", "Chromium"],
       icon: <img src="/image_439cb4.jpg" alt="MyBot Logo" className="w-7 h-7 rounded-md object-cover" onError={(e) => { e.target.onerror = null; e.target.src = "https://ui-avatars.com/api/?name=MB&background=0f172a&color=34d399"; }} />,
       githubLink: "https://github.com/Coldbalouba/MyBot.git",
-      gallery: ["/projects/mybot/2.png"]
+      gallery: ["/projects/mybot/video.mp4", "/projects/mybot/2.png"]
     },
     {
       title: "SchoAi Platform",
@@ -323,7 +323,7 @@ RULES:
               Bridging the gap between <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-500">Business Strategy</span> & <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-500">AI Technology.</span>
             </h1>
             <p className="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl leading-relaxed">
-              Hi, I'm Ahmed Jouini (AJ)—Tunisian, based in Phnom Penh for 4+ years. I'm a Whole Stack Developer, AI Consultant, Business Strategist, and Educator. I build software that automates workflows, advise businesses on strategy and AI, and teach IGCSE/AS Business and Global Perspectives. I work in five languages and thrive at the intersection of tech, business, and pedagogy.
+              Hi, I'm Ahmed Jouini (AJ), based in Phnom Penh for 4+ years. I'm a Whole Stack Developer, AI Consultant, Business Strategist, and Educator. I build software that automates workflows, advise businesses on strategy and AI, and teach IGCSE/AS Business and Global Perspectives. I work in five languages and thrive at the intersection of tech, business, and pedagogy.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <button onClick={() => scrollToSection('projects')} className="px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-lg transition-all flex items-center justify-center">
@@ -347,7 +347,7 @@ RULES:
               <h2 className="text-3xl font-bold text-white mb-6">More Than Just a Developer.</h2>
               <div className="space-y-4 text-slate-300 leading-relaxed">
                 <p>
-                  I hold a BS in Computer Science (Tunisia), an IPGCE from the University of Essex, and I'm completing a BA in Business Management. I've spent 4+ years in Cambodia—teaching at international schools and consulting 20+ businesses in Phnom Penh and Siem Reap—plus a decade of freelance tech and AI work. That mix gives me a rare view: I speak code, business, and the classroom.
+                  I hold a BS in Computer Science, an IPGCE from the University of Essex, and a BA in Business Management. I've spent 4+ years in Cambodia—teaching at international schools and consulting 20+ businesses in Phnom Penh and Siem Reap—plus a decade of freelance tech and AI work. That mix gives me a rare view: I speak code, business, and the classroom.
                 </p>
                 <p>
                   I don't just build apps; I analyze bottlenecks and implement AI-driven solutions that move the needle—e.g. 30% productivity gains for consulting clients. I use inquiry-based learning, gamification, and project-based methods in the classroom, and the same rigor when designing automation (n8n, LLMs, MQL5) and full-stack products.
