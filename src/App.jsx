@@ -21,6 +21,7 @@ export default function App() {
   ]);
   
   const messagesEndRef = useRef(null);
+  const galleryVideoRef = useRef(null);
 
   // Gallery State
   const [galleryOpen, setGalleryOpen] = useState(false);
@@ -176,7 +177,7 @@ RULES:
       tech: ["Next.js", "Python", "LLM APIs", "Data Analytics", "AWS"],
       icon: <LineChart className="w-6 h-6 text-orange-400" />,
       githubLink: "https://github.com/Coldbalouba/BizOps-AI.git",
-      gallery: ["/projects/bizops-ai/1.png", "/projects/bizops-ai/2.gif"]
+      gallery: ["/projects/bizops-ai/video.mp4", "/projects/bizops-ai/1.png"]
     },
     {
       title: "MyBot - AI Web Automator",
@@ -185,7 +186,7 @@ RULES:
       tech: ["Python", "FastAPI", "Ollama", "AI Vision", "Chromium"],
       icon: <img src="/image_439cb4.jpg" alt="MyBot Logo" className="w-7 h-7 rounded-md object-cover" onError={(e) => { e.target.onerror = null; e.target.src = "https://ui-avatars.com/api/?name=MB&background=0f172a&color=34d399"; }} />,
       githubLink: "https://github.com/Coldbalouba/MyBot.git",
-      gallery: ["/projects/mybot/1.gif", "/projects/mybot/2.png"]
+      gallery: ["/projects/mybot/2.png"]
     },
     {
       title: "SchoAi Platform",
@@ -194,7 +195,7 @@ RULES:
       tech: ["React", "Python", "Node.js", "AI Integration", "PostgreSQL"],
       icon: <GraduationCap className="w-6 h-6 text-blue-400" />,
       githubLink: "https://github.com/Coldbalouba/SchoAi",
-      gallery: ["/projects/schoai/1.png", "/projects/schoai/2.gif"]
+      gallery: ["/projects/schoai/video.mp4", "/projects/schoai/1.png"]
     },
     {
       title: "DeskUp - Workspace Automator",
@@ -203,15 +204,15 @@ RULES:
       tech: ["Electron", "React", "TypeScript", "Node.js", "System APIs"],
       icon: <Monitor className="w-6 h-6 text-indigo-400" />,
       githubLink: "https://github.com/Coldbalouba/DeskUp.git",
-      gallery: ["/projects/deskup/1.gif", "/projects/deskup/2.png"]
+      gallery: ["/projects/deskup/video.mp4", "/projects/deskup/2.png"]
     },
   ];
 
   const skills = [
-    { category: "AI & Machine Learning", items: ["TensorFlow", "PyTorch", "OpenAI/LLMs", "Prompt Engineering", "Data Automation"] },
-    { category: "Full Stack Development", items: ["Python", "JavaScript/TypeScript", "React & Next.js", "Node.js", "Java", "SQL/NoSQL"] },
-    { category: "Business & Strategy", items: ["Agile Management", "Data Analysis (Excel/SQL)", "Tech Consulting", "Product Strategy", "Market Trading/MQL5"] },
-    { category: "Design & Tools", items: ["Figma", "Adobe Suite", "Unity", "Git/GitHub", "Cloud Deployment"] }
+    { category: "AI & Machine Learning", items: ["TensorFlow", "PyTorch", "ChatGPT/Grok", "Prompt Engineering", "ML Pipelines", "Local AI (e.g. clawdbot)"] },
+    { category: "Full Stack & Automation", items: ["Python", "JavaScript/Java", "React & Next.js", "Node.js", "n8n (Gmail/APIs)", "MQL5 (trading bots)", "SQL/Excel"] },
+    { category: "Business & Pedagogy", items: ["Business/Finance Models", "Tech Consulting", "Inquiry-Based Learning", "Gamification", "PBL", "Positive Discipline"] },
+    { category: "Design & EdTech", items: ["Figma", "Adobe Suite", "Unity", "Google Workspace", "Moodle/Canvas", "Scratch", "Git/GitHub"] }
   ];
 
   const languages = [
@@ -258,6 +259,12 @@ RULES:
       status: "Consulting Range",
       description: "Validates specialized expertise in implementing robust, secure AI solutions effectively within large-scale organizations.",
       icon: <Server className="w-5 h-5 text-pink-400" />
+    },
+    {
+      title: "Teaching & Pastoral",
+      status: "Achieved",
+      description: "Advanced TEFL (120-hr), Teaching Business English, Teaching Young Learners, SEL (CASEL & UNESCO 2025), Mental Health First Aid (2025), Child Safety PD, First Aid.",
+      icon: <GraduationCap className="w-5 h-5 text-amber-400" />
     }
   ];
 
@@ -316,7 +323,7 @@ RULES:
               Bridging the gap between <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-500">Business Strategy</span> & <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-500">AI Technology.</span>
             </h1>
             <p className="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl leading-relaxed">
-              Hi, I'm Ahmed Jouini (AJ). I am a Whole Stack Developer, AI Consultant, and Business Strategist. I build software that automates workflows, optimizes data decisions, and elevates business productivity.
+              Hi, I'm Ahmed Jouini (AJ)—Tunisian, based in Phnom Penh for 4+ years. I'm a Whole Stack Developer, AI Consultant, Business Strategist, and Educator. I build software that automates workflows, advise businesses on strategy and AI, and teach IGCSE/AS Business and Global Perspectives. I work in five languages and thrive at the intersection of tech, business, and pedagogy.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <button onClick={() => scrollToSection('projects')} className="px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-lg transition-all flex items-center justify-center">
@@ -340,13 +347,13 @@ RULES:
               <h2 className="text-3xl font-bold text-white mb-6">More Than Just a Developer.</h2>
               <div className="space-y-4 text-slate-300 leading-relaxed">
                 <p>
-                  With a unique foundation encompassing a BS in Computer Science, ongoing studies in Business Management, and over 5 years of professional experience across EdTech and freelance consulting, I bring a holistic view to problem-solving.
+                  I hold a BS in Computer Science (Tunisia), an IPGCE from the University of Essex, and I'm completing a BA in Business Management. I've spent 4+ years in Cambodia—teaching at international schools and consulting 20+ businesses in Phnom Penh and Siem Reap—plus a decade of freelance tech and AI work. That mix gives me a rare view: I speak code, business, and the classroom.
                 </p>
                 <p>
-                  I don't just write code; I analyze business bottlenecks and implement AI-driven solutions that yield tangible results—like increasing workflow efficiency by 30% for my consulting clients. 
+                  I don't just build apps; I analyze bottlenecks and implement AI-driven solutions that move the needle—e.g. 30% productivity gains for consulting clients. I use inquiry-based learning, gamification, and project-based methods in the classroom, and the same rigor when designing automation (n8n, LLMs, MQL5) and full-stack products.
                 </p>
                 <p>
-                  Whether it's building a full-stack web application from scratch, deploying a localized LLM server, or integrating intelligent automation into existing business systems, my goal is to leverage the latest breakthroughs to create scalable, profitable tech.
+                  From IGCSE Business and Global Perspectives to custom Python/React apps and trading bots, my goal is to turn the latest tech and pedagogy into scalable, profitable outcomes—whether in education or industry.
                 </p>
               </div>
             </div>
@@ -369,7 +376,7 @@ RULES:
               <div className="p-6 bg-slate-800 rounded-xl border border-slate-700">
                 <Globe className="w-8 h-8 text-pink-400 mb-4" />
                 <h3 className="text-xl font-bold text-white mb-2">Global Comms</h3>
-                <p className="text-sm text-slate-400">Multilingual (English, French, Arabic) with extensive cross-cultural leadership experience.</p>
+                <p className="text-sm text-slate-400">English (native-level), French, Arabic, Polish, Spanish—ready for MENA, Europe, and global teams.</p>
               </div>
             </div>
           </div>
@@ -381,7 +388,7 @@ RULES:
         <div className="container mx-auto px-6 md:px-12">
           <div className="mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Featured Projects</h2>
-            <p className="text-slate-400 max-w-2xl">A selection of my recent work spanning AI infrastructure, web platforms, and mobile applications.</p>
+            <p className="text-slate-400 max-w-2xl">AI automation, EdTech, desktop tools, and web platforms—each with a video walkthrough and screenshots.</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -489,9 +496,9 @@ RULES:
             <div className="inline-flex items-center justify-center p-3 bg-slate-800 rounded-full mb-4 border border-slate-700">
               <Award className="w-6 h-6 text-emerald-400" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Certifications That Signal Consulting + Technical Range</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Certifications: Technical, Teaching & Pastoral</h2>
             <p className="text-slate-400 max-w-2xl mx-auto">
-              A blend of achieved technical certifications and targeted enterprise-grade benchmarks that validate my expertise in implementing scalable tech and AI solutions within organizations.
+              From Google AI and IBM Applied AI to Advanced TEFL, SEL (CASEL/UNESCO), Mental Health First Aid, and Child Safety—I combine certified tech and pedagogy for roles that need both.
             </p>
           </div>
 
@@ -531,14 +538,12 @@ RULES:
                 <Terminal className="w-5 h-5" />
               </div>
               <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl border border-slate-700 bg-slate-800/80 shadow-lg">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-bold text-white text-lg">Freelance Full Stack & AI Consultant</h3>
-                </div>
-                <div className="text-sm text-emerald-400 mb-4">Upwork / Fiverr • 2015 - Present</div>
+                <h3 className="font-bold text-white text-lg">IGCSE & AS Business Teacher / Business Instructor</h3>
+                <div className="text-sm text-emerald-400 mb-4">ELT Berkeley International School • July 2025 - Present</div>
                 <ul className="text-sm text-slate-400 space-y-2">
-                  <li>• Engineered custom applications and media platforms using Python, React, and Unity.</li>
-                  <li>• Provided AI consulting for businesses, integrating automation tools that boosted operational efficiency by 30%.</li>
-                  <li>• Managed end-to-end agile project lifecycles, ensuring timely and under-budget delivery for international clients.</li>
+                  <li>• Teach IGCSE and AS/A Levels Business; Global Perspectives (Year 8 to AS Level).</li>
+                  <li>• Integrate AI/ML for assessments; apply business and finance models to case studies.</li>
+                  <li>• Lead community innovation projects blending technology with business management.</li>
                 </ul>
               </div>
             </div>
@@ -546,17 +551,14 @@ RULES:
             {/* Experience Item 2 */}
             <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
               <div className="flex items-center justify-center w-10 h-10 rounded-full border border-blue-500 bg-slate-900 text-blue-500 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                <Server className="w-5 h-5" />
+                <Code className="w-5 h-5" />
               </div>
               <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl border border-slate-700 bg-slate-800/80 shadow-lg">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-bold text-white text-lg">Business & Tech Educator</h3>
-                </div>
-                <div className="text-sm text-blue-400 mb-4">ELT Berkeley • July 2025 - Present</div>
+                <h3 className="font-bold text-white text-lg">Homeroom & English Teacher / Curriculum Developer</h3>
+                <div className="text-sm text-blue-400 mb-4">Footprints International School • Aug 2023 - Jul 2025</div>
                 <ul className="text-sm text-slate-400 space-y-2">
-                  <li>• Applying complex business and finance models to drive data-driven insights.</li>
-                  <li>• Integrating AI and Machine Learning tools for automated assessments and administrative efficiency.</li>
-                  <li>• Leading community innovation projects, merging technology with practical business management strategies.</li>
+                  <li>• Built EdTech environments for curriculum delivery and analytics; pastoral care and EAL (phonics/reading).</li>
+                  <li>• Ran "Student Voice" initiatives; customized AI and productivity tools for departments.</li>
                 </ul>
               </div>
             </div>
@@ -564,17 +566,42 @@ RULES:
             {/* Experience Item 3 */}
             <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
               <div className="flex items-center justify-center w-10 h-10 rounded-full border border-purple-500 bg-slate-900 text-purple-500 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                <Code className="w-5 h-5" />
+                <GraduationCap className="w-5 h-5" />
               </div>
               <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl border border-slate-700 bg-slate-800/80 shadow-lg">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-bold text-white text-lg">Tech Integration Specialist & Teacher</h3>
-                </div>
-                <div className="text-sm text-purple-400 mb-4">Footprints Int'l School • Aug 2023 - Jul 2025</div>
+                <h3 className="font-bold text-white text-lg">Homeroom Teacher (Gr 5–6) / French & ESL Cover</h3>
+                <div className="text-sm text-purple-400 mb-4">Golden Gate American School, Invictus International • 2022 - 2023</div>
                 <ul className="text-sm text-slate-400 space-y-2">
-                  <li>• Architected EdTech environments for enhanced curriculum delivery and data analytics.</li>
-                  <li>• Customized financial and AI tools to optimize productivity across teaching departments.</li>
-                  <li>• Collaborated with administrative stakeholders to implement tech-driven business programs.</li>
+                  <li>• Golden Gate: Grade 5 & 6 homeroom; core subjects, social studies, daily SEL.</li>
+                  <li>• Invictus: French & ESL cover teacher.</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Experience Item 4 */}
+            <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+              <div className="flex items-center justify-center w-10 h-10 rounded-full border border-pink-500 bg-slate-900 text-pink-500 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                <Briefcase className="w-5 h-5" />
+              </div>
+              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl border border-slate-700 bg-slate-800/80 shadow-lg">
+                <h3 className="font-bold text-white text-lg">Business Consultant (Cambodia)</h3>
+                <div className="text-sm text-pink-400 mb-4">Phnom Penh & Siem Reap • 3 years</div>
+                <ul className="text-sm text-slate-400 space-y-2">
+                  <li>• Consulted 20+ businesses on optimization and strategy across the two cities.</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Experience Item 5 */}
+            <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+              <div className="flex items-center justify-center w-10 h-10 rounded-full border border-slate-400 bg-slate-900 text-slate-400 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                <Server className="w-5 h-5" />
+              </div>
+              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl border border-slate-700 bg-slate-800/80 shadow-lg">
+                <h3 className="font-bold text-white text-lg">Freelance Full Stack & AI Consultant</h3>
+                <div className="text-sm text-slate-400 mb-4">Upwork / Fiverr • 2015 - Present</div>
+                <ul className="text-sm text-slate-400 space-y-2">
+                  <li>• Custom apps and media (Python, React, Unity, Adobe); AI consulting with proven ~30% efficiency gains for clients.</li>
                 </ul>
               </div>
             </div>
@@ -678,31 +705,52 @@ RULES:
             </div>
 
             <div className="relative w-full min-h-[400px] aspect-video bg-slate-900 border border-slate-700 rounded-xl overflow-hidden flex items-center justify-center shadow-2xl">
-              <img 
-                src={toDriveImageUrl(currentGallery[currentImageIndex], true)} 
-                alt={`${currentGalleryTitle} Screenshot ${currentImageIndex + 1}`} 
-                className="w-full h-full object-contain"
-                loading="eager"
-                onError={(e) => {
-                  const next = toDriveImageUrl(currentGallery[currentImageIndex], false);
-                  if (e.target.src !== next) {
-                    e.target.onerror = null;
-                    e.target.src = next;
-                  } else {
-                    e.target.onerror = null;
-                    e.target.src = "https://placehold.co/1200x675/1e293b/64748b?text=Image+unavailable";
-                  }
-                }}
-              />
-              <a
-                href={getDriveViewUrl(currentGallery[currentImageIndex])}
-                target="_blank"
-                rel="noreferrer"
-                className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-lg bg-slate-950/90 text-white text-sm font-medium hover:bg-emerald-500 hover:text-slate-950 transition-colors border border-slate-600"
-              >
-                Open full size (best for GIFs)
-              </a>
-              
+              {currentGallery[currentImageIndex].toLowerCase().endsWith(".mp4") ? (
+                <>
+                  <video
+                    key={currentGallery[currentImageIndex]}
+                    ref={galleryVideoRef}
+                    src={currentGallery[currentImageIndex]}
+                    controls
+                    playsInline
+                    className="w-full h-full object-contain"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => galleryVideoRef.current?.requestFullscreen?.()}
+                    className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-lg bg-slate-950/90 text-white text-sm font-medium hover:bg-emerald-500 hover:text-slate-950 transition-colors border border-slate-600"
+                  >
+                    Fullscreen
+                  </button>
+                </>
+              ) : (
+                <>
+                  <img 
+                    src={toDriveImageUrl(currentGallery[currentImageIndex], true)} 
+                    alt={`${currentGalleryTitle} ${currentImageIndex + 1}`} 
+                    className="w-full h-full object-contain"
+                    loading="eager"
+                    onError={(e) => {
+                      const next = toDriveImageUrl(currentGallery[currentImageIndex], false);
+                      if (e.target.src !== next) {
+                        e.target.onerror = null;
+                        e.target.src = next;
+                      } else {
+                        e.target.onerror = null;
+                        e.target.src = "https://placehold.co/1200x675/1e293b/64748b?text=Image+unavailable";
+                      }
+                    }}
+                  />
+                  <a
+                    href={getDriveViewUrl(currentGallery[currentImageIndex])}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-lg bg-slate-950/90 text-white text-sm font-medium hover:bg-emerald-500 hover:text-slate-950 transition-colors border border-slate-600"
+                  >
+                    Open full size
+                  </a>
+                </>
+              )}
               {currentGallery.length > 1 && (
                 <>
                   <button 
