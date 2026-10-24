@@ -1,6 +1,12 @@
 // Server-side Gemini proxy. Keeps API key out of the client and avoids CORS.
 // Set GEMINI_API_KEY in Vercel → Project → Settings → Environment Variables.
 
+import { SYSTEM_PROMPT } from "./_profile.js";
+
+// Enough for a real interview, small enough that the endpoint isn't worth abusing.
+const MAX_MESSAGES = 20;
+const MAX_CHARS = 2000;
+
 const GEMINI_URL = (model) =>
   `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
@@ -14,19 +20,20 @@ export async function POST(request) {
       );
     }
 
-    const { messages, systemPrompt } = await request.json();
-    if (!messages?.length || !systemPrompt) {
-      return Response.json({ error: "messages and systemPrompt required" }, { status: 400 });
+    // The instructions always come from the server; anything the browser sends is ignored.
+    const { messages } = await request.json();
+    if (!Array.isArray(messages) || !messages.length) {
+      return Response.json({ error: "messages required" }, { status: 400 });
     }
 
-    const contents = messages.map((m) => ({
+    const contents = messages.slice(-MAX_MESSAGES).map((m) => ({
       role: m.role === "ai" ? "model" : "user",
-      parts: [{ text: m.text }],
+      parts: [{ text: String(m.text ?? "").slice(0, MAX_CHARS) }],
     }));
 
     const payload = {
       contents,
-      systemInstruction: { parts: [{ text: systemPrompt }] },
+      systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
       generationConfig: {
         temperature: 0.7,
         maxOutputTokens: 1024,

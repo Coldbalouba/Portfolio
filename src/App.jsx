@@ -77,62 +77,7 @@ export default function App() {
     }
   };
 
-  const systemPrompt = `You are the AI clone and professional representative of Ahmed Jouini (AJ). Answer as if you are AJ himself: confident, professional, concise, and enthusiastic. Use first person only.
 
-1. CORE IDENTITY & DEMOGRAPHICS
-- Name: Ahmed Jouini (AJ). Age: 31.
-- Current location: Phnom Penh, Cambodia (resident 4+ years). Open to remote worldwide.
-- Physical: 178 cm, 75 kg.
-- Languages: English (native-level), French (fluent), Arabic (fluent), Polish (intermediate), Spanish (intermediate).
-- Contact: Phone +855061292510 | Email Coldbalouba@gmail.com.
-- Roles: Whole Stack Developer, AI Consultant, Business Strategist, Educator.
-
-2. EDUCATION & CERTIFICATIONS
-Degrees: IPGCE (University of Essex, UK, 2024-2025); BA Business Management (London School of International Business); BS Computer Science (Faculty of Science & Technology, 2012-2015).
-Technical & AI: Google AI Essentials (2025), IBM Applied AI Professional Certificate (2025), Machine Learning Specialization (DeepLearning.AI, 2024).
-Teaching & pastoral: Advanced TEFL (120-hr), Teaching Business English, Teaching Young Learners, Social-Emotional Learning (CASEL & UNESCO, 2025), Mental Health First Aid (2025), Child Safety PD, First Aid.
-
-3. PROFESSIONAL EXPERIENCE — EDUCATION & PEDAGOGY
-- ELT Berkeley International School (July 2025–Present): IGCSE and AS/A Levels Business Teacher / Business Instructor. Integrates AI/ML for assessments, business/finance models for case studies, leads community innovation. Teaches Global Perspectives Year 8 to AS Level.
-- Footprints International School (Aug 2023–July 2025): Homeroom & English Teacher / Curriculum Developer. Built EdTech environments for delivery and analytics. Pastoral care, EAL differentiation (phonics/reading), "Student Voice" initiatives.
-- Golden Gate American School (Sep 2022–Aug 2023): Grade 5 & 6 Homeroom Teacher. Core subjects, social studies, daily SEL.
-- Invictus International School (Mar 2022–Aug 2022): French & ESL Cover Teacher.
-Pedagogy: Inquiry-Based Learning, Gamification, Project-Based Learning, Positive Discipline.
-
-4. PROFESSIONAL EXPERIENCE — BUSINESS & FREELANCE
-- Business consulting (Cambodia): Consulting in Phnom Penh and Siem Reap; assisted 20+ businesses over 3 years with optimization and strategy.
-- Freelance (Upwork/Fiverr, 2015–Present): Custom apps and media (Python/Unity/Adobe). AI consulting for research and automation; e.g. 30% productivity boosts for clients.
-
-5. TECHNICAL & DIGITAL SKILLS
-AI & ML: Expert prompting and ML pipelines. ChatGPT, Grok, TensorFlow, PyTorch. Open-source local AI (e.g. clawdbot via Termux on Android).
-Programming: Python, JavaScript, Java, MQL5 (trading bots/scripts).
-Automation: n8n with Gmail and other APIs.
-Software & EdTech: Google Workspace, Moodle, Canvas, Adobe Creative Suite, Canva, Unity, Figma, Scratch, Minecraft Education.
-Data: Excel, Google Sheets, SQL.
-
-6. FINANCE & TRADING
-- Active day trader; focus on XAU/USD (Gold) and silver. Platforms: MT5, Exness, cTrader, TradingView.
-- Strong in business finance models, hedging, risk management, ratio calculations.
-- STRICT: When calculating Return on Capital Employed (ROCE), use current liabilities in the formula, not long-term liabilities.
-
-7. CREATIVE PROJECTS, INTERESTS & TRIVIA
-- Creative writing: Developing a comic universe. Lead characters include "Zero" (superbeing form "The Being") and "Gray". STRICT: Do not default Gray's age to 25; follow custom backstory specs.
-- History & culture: Ancient history (Punic Wars, Carthage vs Rome), Nordic Noir, The Book Thief, The Rocky Horror Picture Show.
-- Gaming: Football Manager (record-breaking challenges), eFootball (scouting high-potential youth). Coaches youth football in real life.
-- Pop culture & astrology: Superhero lore and power scaling (e.g. Dr. Manhattan, Ebony Maw); astrological character traits (e.g. Aquarius and Aries).
-
-8. PROJECTS (TECH)
-- BizOps-AI Enterprise Suite: Enterprise AI automation, predictive analytics, workflow optimization.
-- MyBot: Headless server/dock for browser automation via natural language (Ollama, Gemini vision).
-- SchoAi Platform: AI-driven EdTech for schools; tutoring, admin tools, secure hub.
-- DeskUp: Desktop environment manager and productivity suite for remote work.
-- TeachHelp AI Generator: Gemini-based tool for teachers to create HTML lesson packages quickly.
-
-RULES:
-- Always first person. Tone: professional, competent, slightly witty and approachable.
-- Keep responses to 3–4 short paragraphs for recruiters.
-- If outside knowledge base: "That's a great question! I'd love to discuss that in an interview. Email me at Coldbalouba@gmail.com."
-- Emphasize the mix of business, tech, and AI.`;
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -148,22 +93,22 @@ RULES:
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: chatHistory, systemPrompt }),
+        body: JSON.stringify({ messages: chatHistory }),
       });
       const data = await res.json();
 
       if (!res.ok) {
         const errMsg = data?.error || `Error ${res.status}`;
         console.error("Chat API error:", res.status, data);
-        setMessages(prev => [...prev, { role: "ai", text: `Something went wrong: ${errMsg}. Make sure GEMINI_API_KEY is set in Vercel → Settings → Environment Variables and redeploy. You can always email me at Coldbalouba@gmail.com!` }]);
+        setMessages(prev => [...prev, { role: "ai", text: "The assistant is unavailable right now. Please try again shortly or connect with me on LinkedIn: https://www.linkedin.com/in/ahmedjouini/" }]);
         return;
       }
 
-      const aiText = data?.text || "I didn't get a reply. Try again or email me at Coldbalouba@gmail.com!";
+      const aiText = data?.text || "I didn't get a reply. Please try again or connect with me on LinkedIn: https://www.linkedin.com/in/ahmedjouini/";
       setMessages(prev => [...prev, { role: "ai", text: aiText }]);
     } catch (error) {
       console.error("Chat error:", error);
-      setMessages(prev => [...prev, { role: "ai", text: "Network error. If you're testing locally, run `vercel dev` so the chat API works. Otherwise reach out at Coldbalouba@gmail.com!" }]);
+      setMessages(prev => [...prev, { role: "ai", text: "I couldn't connect to the assistant. Please try again or connect with me on LinkedIn: https://www.linkedin.com/in/ahmedjouini/" }]);
     } finally {
       setIsLoading(false);
     }
@@ -173,8 +118,8 @@ RULES:
     {
       title: "BizOps-AI Enterprise Suite",
       category: "Business Intelligence & AI",
-      description: "An enterprise-grade AI automation suite designed to streamline business operations. Integrates predictive analytics, automated reporting, and LLM-driven workflow optimizations to elevate organizational efficiency.",
-      tech: ["Next.js", "Python", "LLM APIs", "Data Analytics", "AWS"],
+      description: "A business operations dashboard: live KPIs, anomaly detection that flags unusual sales and traffic, and plain-English questions answered straight from the database by an LLM. Runs with one Docker command.",
+      tech: ["Python", "FastAPI", "React", "scikit-learn", "LangChain", "Docker"],
       icon: <LineChart className="w-6 h-6 text-orange-400" />,
       githubLink: "https://github.com/Coldbalouba/BizOps-AI.git",
       gallery: ["/projects/bizops-ai/video.mp4", "/projects/bizops-ai/1.png"]
@@ -182,8 +127,8 @@ RULES:
     {
       title: "MyBot - AI Web Automator",
       category: "AI Desktop/Server App",
-      description: "A headless server and dock for controlling browsers using natural language. Automates web tasks with vision-capable AI models (Local Ollama or Cloud APIs like Gemini). Features a FastAPI server for VPS hosting.",
-      tech: ["Python", "FastAPI", "Ollama", "AI Vision", "Chromium"],
+      description: "A desktop dock that controls your own Chrome in plain English through a browser extension. Type a task and it navigates, fills forms, clicks and pulls out information, using local Ollama models or Gemini, Groq and OpenRouter.",
+      tech: ["Python", "Chrome Extension", "Ollama", "Gemini", "AI Vision"],
       icon: <img src="/image_439cb4.jpg" alt="MyBot Logo" className="w-7 h-7 rounded-md object-cover" onError={(e) => { e.target.onerror = null; e.target.src = "https://ui-avatars.com/api/?name=MB&background=0f172a&color=34d399"; }} />,
       githubLink: "https://github.com/Coldbalouba/MyBot.git",
       gallery: ["/projects/mybot/video.mp4", "/projects/mybot/2.png"]
@@ -191,20 +136,44 @@ RULES:
     {
       title: "SchoAi Platform",
       category: "EdTech & AI System",
-      description: "A comprehensive AI-driven educational platform designed for responsible use in schools. It features intelligent tutoring, automated administrative tools, and a centralized hub to connect students, teachers, and stakeholders securely.",
-      tech: ["React", "Python", "Node.js", "AI Integration", "PostgreSQL"],
+      description: "A self-hosted AI assistant for schools that runs on the school's own network. Admins set the AI's rules, block websites and send announcements; students get guided answers from local models, with optional web search.",
+      tech: ["C#", ".NET 6", "Ollama", "SearxNG", "Docker"],
       icon: <GraduationCap className="w-6 h-6 text-blue-400" />,
       githubLink: "https://github.com/Coldbalouba/SchoAi",
       gallery: ["/projects/schoai/video.mp4", "/projects/schoai/1.png"]
     },
     {
-      title: "DeskUp - Workspace Automator",
-      category: "Desktop Productivity App",
-      description: "An advanced desktop environment manager and productivity suite. Integrates system-level automation, smart task prioritization, and cross-platform syncing to optimize daily workflows for remote professionals.",
-      tech: ["Electron", "React", "TypeScript", "Node.js", "System APIs"],
+      title: "DeskUp - Screenshot AI Assistant",
+      category: "Desktop AI Tool",
+      description: "Snip anything on screen with Win+Shift+S, then click the floating pill and ask a local vision model about it. Runs fully offline with Ollama, from the system tray.",
+      tech: ["Python", "PyQt6", "Ollama", "Llama 3.2 Vision"],
       icon: <Monitor className="w-6 h-6 text-indigo-400" />,
       githubLink: "https://github.com/Coldbalouba/DeskUp.git",
       gallery: ["/projects/deskup/video.mp4", "/projects/deskup/2.png"]
+    },
+    {
+      title: "TeachHelp - Lesson Generator",
+      category: "EdTech & AI",
+      description: "Describe a lesson and get a complete, ready-to-teach package: a step-by-step plan, five slides, flashcards and a quiz, all in one page. Built for busy teachers, powered by the Gemini API.",
+      tech: ["JavaScript", "HTML/CSS", "Gemini API"],
+      icon: <BookOpen className="w-6 h-6 text-amber-400" />,
+      githubLink: "https://github.com/Coldbalouba/TeachHelp",
+    },
+    {
+      title: "Helper Bot - Phone-Powered Robot",
+      category: "Robotics & AI",
+      description: "A two-wheeled robot that uses a phone as its face and brain. The phone spots people with its camera, takes voice commands (come here, follow me, stop) and steers over Bluetooth, while a micro:bit drives the motors and stops them if the phone goes quiet. 3D-printed chassis and phone clamp.",
+      tech: ["micro:bit", "MakeCode", "Web Bluetooth", "MediaPipe", "Python CAD", "3D printing"],
+      icon: <Bot className="w-6 h-6 text-cyan-400" />,
+      githubLink: "https://github.com/Coldbalouba/Helper-Bot",
+    },
+    {
+      title: "Wonderkids Network",
+      category: "Founder · EdTech Platform",
+      description: "Online interest clubs and collaborative projects for students at partner schools across Asia, with school-run moderation. The public site has a free learning library, creative tools and a short video for schools.",
+      tech: ["Next.js", "Firebase", "Google Apps Script", "AI moderation"],
+      icon: <Globe className="w-6 h-6 text-emerald-400" />,
+      liveLink: "https://wonderkidsnetwork.com",
     },
   ];
 
@@ -235,30 +204,6 @@ RULES:
       status: "Achieved (2024)",
       description: "Advanced coursework in building, training, and deploying machine learning models, neural networks, and deep learning architectures.",
       icon: <ShieldCheck className="w-5 h-5 text-emerald-400" />
-    },
-    {
-      title: "AWS / Azure / GCP Cloud Certifications",
-      status: "Consulting Range",
-      description: "Expertise in remote IT support, server deployment, and scalable cloud infrastructure to maximize remote market ROI.",
-      icon: <Globe className="w-5 h-5 text-blue-400" />
-    },
-    {
-      title: "Microsoft Azure AI Fundamentals",
-      status: "Consulting Range",
-      description: "Approachable and business-ready. Validates AI literacy for translating complex tech into actionable business strategies.",
-      icon: <Briefcase className="w-5 h-5 text-purple-400" />
-    },
-    {
-      title: "Google Professional ML Engineer",
-      status: "Consulting Range",
-      description: "Specialized expertise on the data and AI side, ensuring high-performance model training and MLOps lifecycle management.",
-      icon: <LineChart className="w-5 h-5 text-orange-400" />
-    },
-    {
-      title: "AI/ML Implementation (CAIP, SAS, NVIDIA)",
-      status: "Consulting Range",
-      description: "Validates specialized expertise in implementing robust, secure AI solutions effectively within large-scale organizations.",
-      icon: <Server className="w-5 h-5 text-pink-400" />
     },
     {
       title: "Teaching & Pastoral",
@@ -323,7 +268,7 @@ RULES:
               Bridging the gap between <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-500">Business Strategy</span> & <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-500">AI Technology.</span>
             </h1>
             <p className="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl leading-relaxed">
-              Hi, I'm Ahmed Jouini (AJ), based in Phnom Penh for 4+ years. I'm a Whole Stack Developer, AI Consultant, Business Strategist, and Educator. I build software that automates workflows, advise businesses on strategy and AI, and teach IGCSE/AS Business and Global Perspectives. I work in five languages and thrive at the intersection of tech, business, and pedagogy.
+              Hi, I'm Ahmed Jouini (AJ), based in Phnom Penh for 4+ years. I'm an educator, developer and AI consultant. I teach high school at CIA FIRST International School, build software that automates workflows, advise businesses on strategy and AI, and founded Wonderkids Network, where students from schools across Asia build projects together. I work in five languages and thrive at the intersection of tech, business, and pedagogy.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
               <button onClick={() => scrollToSection('projects')} className="px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-lg transition-all flex items-center justify-center">
@@ -360,7 +305,7 @@ RULES:
             <div className="grid grid-cols-2 gap-4">
               <div className="p-6 bg-slate-800 rounded-xl border border-slate-700">
                 <Code className="w-8 h-8 text-emerald-400 mb-4" />
-                <h3 className="text-xl font-bold text-white mb-2">Whole Stack</h3>
+                <h3 className="text-xl font-bold text-white mb-2">Development</h3>
                 <p className="text-sm text-slate-400">From database architecture to pixel-perfect UI, mastering both logic and presentation.</p>
               </div>
               <div className="p-6 bg-slate-800 rounded-xl border border-slate-700">
@@ -388,7 +333,7 @@ RULES:
         <div className="container mx-auto px-6 md:px-12">
           <div className="mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Featured Projects</h2>
-            <p className="text-slate-400 max-w-2xl">AI automation, EdTech, desktop tools, and web platforms—each with a video walkthrough and screenshots.</p>
+            <p className="text-slate-400 max-w-2xl">AI automation, EdTech, desktop tools and web platforms, most with a video walkthrough and screenshots.</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -424,9 +369,16 @@ RULES:
                       <ImageIcon className="w-4 h-4 mr-1" /> Media
                     </button>
                   )}
-                  <a href={project.githubLink || "#"} target={project.githubLink ? "_blank" : "_self"} rel="noreferrer" className="text-slate-400 hover:text-white transition-colors flex items-center text-sm font-medium">
-                    <Github className="w-4 h-4 mr-1" /> Code
-                  </a>
+                  {project.liveLink && (
+                    <a href={project.liveLink} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors flex items-center text-sm font-medium">
+                      <ExternalLink className="w-4 h-4 mr-1" /> Visit
+                    </a>
+                  )}
+                  {project.githubLink && (
+                    <a href={project.githubLink} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors flex items-center text-sm font-medium">
+                      <Github className="w-4 h-4 mr-1" /> Code
+                    </a>
+                  )}
                 </div>
               </div>
             ))}
@@ -532,14 +484,43 @@ RULES:
           
           <div className="space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-700 before:to-transparent">
             
-            {/* Experience Item 1 */}
+            {/* Current: CIA FIRST */}
             <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+              <div className="flex items-center justify-center w-10 h-10 rounded-full border border-emerald-500 bg-slate-900 text-emerald-500 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow shadow-emerald-500/20">
+                <GraduationCap className="w-5 h-5" />
+              </div>
+              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl border border-slate-700 bg-slate-800/80 shadow-lg">
+                <h3 className="font-bold text-white text-lg">High School CSP Teacher</h3>
+                <div className="text-sm text-emerald-400 mb-4">CIA FIRST International School • Aug 2026 - Present</div>
+                <ul className="text-sm text-slate-400 space-y-2">
+                  <li>• Full-time high school teacher in Phnom Penh.</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Current: Wonderkids Network */}
+            <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+              <div className="flex items-center justify-center w-10 h-10 rounded-full border border-emerald-500 bg-slate-900 text-emerald-500 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow shadow-emerald-500/20">
+                <Globe className="w-5 h-5" />
+              </div>
+              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl border border-slate-700 bg-slate-800/80 shadow-lg">
+                <h3 className="font-bold text-white text-lg">Founder</h3>
+                <div className="text-sm text-emerald-400 mb-4"><a href="https://wonderkidsnetwork.com" target="_blank" rel="noreferrer" className="hover:underline">Wonderkids Network</a> • Feb 2026 - Present</div>
+                <ul className="text-sm text-slate-400 space-y-2">
+                  <li>• Online interest clubs and collaborative projects for students at partner schools across Asia.</li>
+                  <li>• Built the platform: school sign-in, club feeds, private chats, AI-assisted moderation and a free learning library.</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Experience Item 1 */}
+            <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
               <div className="flex items-center justify-center w-10 h-10 rounded-full border border-emerald-500 bg-slate-900 text-emerald-500 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow shadow-emerald-500/20">
                 <Terminal className="w-5 h-5" />
               </div>
               <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-xl border border-slate-700 bg-slate-800/80 shadow-lg">
                 <h3 className="font-bold text-white text-lg">IGCSE & AS Business Teacher / Business Instructor</h3>
-                <div className="text-sm text-emerald-400 mb-4">ELT Berkeley International School • July 2025 - Present</div>
+                <div className="text-sm text-emerald-400 mb-4">ELT Berkeley International School • Jul 2025 - Jul 2026</div>
                 <ul className="text-sm text-slate-400 space-y-2">
                   <li>• Teach IGCSE and AS/A Levels Business; Global Perspectives (Year 8 to AS Level).</li>
                   <li>• Integrate AI/ML for assessments; apply business and finance models to case studies.</li>
@@ -614,7 +595,7 @@ RULES:
       <footer className="bg-slate-950 py-8 border-t border-slate-800/50 text-center">
         <div className="container mx-auto px-6">
           <p className="text-slate-500 text-sm">
-            © {new Date().getFullYear()} Ahmed Jouini. Whole Stack Developer & AI Consultant.
+            © {new Date().getFullYear()} Ahmed Jouini. Educator, Developer & AI Consultant.
           </p>
         </div>
       </footer>
